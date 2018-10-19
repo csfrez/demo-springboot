@@ -20,7 +20,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/","/home","/actuator/**","/country/**").permitAll()
+				.antMatchers("/","/home","/actuator/**","/country/**","/druid/**").permitAll()
 				.anyRequest().authenticated().and()
 			.formLogin()
 				.usernameParameter("username")
@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	public void configure(WebSecurity web) throws Exception {
-		web.ignoring().antMatchers("/country/**");
+		web.ignoring().antMatchers("/country/**","/druid/**");
 	}
 
 	@Autowired
