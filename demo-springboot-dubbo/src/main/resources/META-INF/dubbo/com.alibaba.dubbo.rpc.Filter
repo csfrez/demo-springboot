@@ -1,0 +1,2 @@
+consumerlogging=com.csfrez.demospringboot.filter.ConsumerLoggingFilter
+providerlogging=com.csfrez.demospringboot.filter.ProviderLoggingFilter
