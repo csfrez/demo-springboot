@@ -1,4 +1,4 @@
-package com.csfrez.demospringbootserver;
+package com.csfrez.demospringboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -9,9 +9,9 @@ import de.codecentric.boot.admin.server.config.EnableAdminServer;
 @SpringBootApplication
 @EnableAutoConfiguration
 @EnableAdminServer
-public class DemoSpringbootServerApplication {
+public class DemoSpringbootAdminApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoSpringbootServerApplication.class, args);
+		SpringApplication.run(DemoSpringbootAdminApplication.class, args);
 	}
 }

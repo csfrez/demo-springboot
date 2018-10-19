@@ -29,7 +29,7 @@ public class ConsumerLoggingFilter implements Filter {
         boolean monitorServiceFlag = serviceString.contains(MonitorService.class.getName());
         if (!monitorServiceFlag) {
             try {
-                logger.info("发送请求[interfact={}${}, args={}]", new Object[] {serviceString, invocation.getMethodName(), invocation.getArguments()});
+                logger.info("发送请求[interface={}${}, args={}]", new Object[] {serviceString, invocation.getMethodName(), invocation.getArguments()});
             } catch (Exception ignore) {
             }
         }
