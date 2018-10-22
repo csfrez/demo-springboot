@@ -31,6 +31,7 @@
     	
     	<demo.springboot.dubbo.version>0.0.1-SNAPSHOT</demo.springboot.dubbo.version>
     	<demo.springboot.dao.version>0.0.1-SNAPSHOT</demo.springboot.dao.version>
+    	<demo.springboot.security.version>0.0.1-SNAPSHOT</demo.springboot.security.version>
     </properties>
     
     <dependencyManagement>
@@ -85,6 +86,12 @@
 			    <artifactId>demo-springboot-dubbo</artifactId>
 			    <version>${demo.springboot.dubbo.version}</version>
 			</dependency>
+			
+			<dependency>
+			    <groupId>com.csfrez</groupId>
+			    <artifactId>demo-springboot-security</artifactId>
+			    <version>${demo.springboot.security.version}</version>
+			</dependency>
 	    
 	    </dependencies>
     </dependencyManagement>
@@ -94,6 +101,7 @@
         <module>demo-springboot-dao</module>
         <module>demo-springboot-dubbo</module>
         <module>demo-springboot-client</module>
+        <module>demo-springboot-security</module>
         <module>demo-springboot-server</module>
     </modules>
 	
