@@ -1,21 +1,32 @@
 package com.csfrez.demospringboot.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.csfrez.demospringboot.mapper.CountryMapper;
 import com.csfrez.demospringboot.model.Country;
+import com.github.pagehelper.PageHelper;
+
+import tk.mybatis.mapper.entity.Example;
+import tk.mybatis.mapper.weekend.Weekend;
+import tk.mybatis.mapper.weekend.WeekendCriteria;
 
 @Service
 public class CountryService {
 
     @Autowired
     private CountryMapper countryMapper;
-    /*
-    public List<Country> getAll(Country country) {
-        if (country.getPage() != null && country.getRows() != null) {
-            PageHelper.startPage(country.getPage(), country.getRows());
+    
+    public List<Country> getAll(Country country, int pageNum, int pageSize) {
+        if (pageNum <= 0) {
+            pageNum = 1; 
         }
+        if (pageSize <= 0) {
+        	pageSize = 10;
+        }
+        PageHelper.startPage(pageNum, pageSize);
         Example example = new Example(Country.class);
         Example.Criteria criteria = example.createCriteria();
         if (country.getCountryname() != null && country.getCountryname().length() > 0) {
@@ -27,10 +38,14 @@ public class CountryService {
         return countryMapper.selectByExample(example);
     }
 
-    public List<Country> getAllByWeekend(Country country) {
-        if (country.getPage() != null && country.getRows() != null) {
-            PageHelper.startPage(country.getPage(), country.getRows());
+    public List<Country> getAllByWeekend(Country country, int pageNum, int pageSize) {
+    	if (pageNum <= 0) {
+            pageNum = 1; 
         }
+        if (pageSize <= 0) {
+        	pageSize = 10;
+        }
+        PageHelper.startPage(pageNum, pageSize);
         Weekend<Country> weekend = Weekend.of(Country.class);
         WeekendCriteria<Country, Object> criteria = weekend.weekendCriteria();
         if (country.getCountryname() != null && country.getCountryname().length() > 0) {
@@ -41,7 +56,7 @@ public class CountryService {
         }
         return countryMapper.selectByExample(weekend);
     }
-    */
+    
     public Country getById(Integer id) {
         return countryMapper.selectByPrimaryKey(id);
     }

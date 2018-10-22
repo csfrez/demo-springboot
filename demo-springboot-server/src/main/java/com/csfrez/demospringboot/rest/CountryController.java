@@ -1,32 +1,34 @@
 package com.csfrez.demospringboot.rest;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.csfrez.demospringboot.model.Country;
 import com.csfrez.demospringboot.service.CountryService;
 
-@Controller
+@RestController
 @RequestMapping("/country")
 public class CountryController {
 
     @Autowired
     private CountryService countryService;
-    /*
-    @RequestMapping
-    public ModelAndView getAll(Country country) {
-        ModelAndView result = new ModelAndView("index");
-        List<Country> countryList = countryService.getAllByWeekend(country);
-        result.addObject("pageInfo", new PageInfo<Country>(countryList));
-        result.addObject("queryParam", country);
-        result.addObject("page", country.getPage());
-        result.addObject("rows", country.getRows());
-        return result;
+    
+    @RequestMapping(value = "/getall")
+    public  List<Country> getAll(Country country, int pageNum, int pageSize) {
+        List<Country> countryList = countryService.getAll(country, pageNum, pageSize);
+        return countryList;
     }
-    */
+    
+    @RequestMapping(value = "/getallbyweekend")
+    public  List<Country> getAllByWeekend(Country country, int pageNum, int pageSize) {
+        List<Country> countryList = countryService.getAllByWeekend(country, pageNum, pageSize);
+        return countryList;
+    }
 
     @RequestMapping(value = "/view/{id}")
     @ResponseBody
