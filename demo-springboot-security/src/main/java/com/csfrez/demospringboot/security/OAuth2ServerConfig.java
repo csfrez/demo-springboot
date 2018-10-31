@@ -14,7 +14,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 @Configuration
 public class OAuth2ServerConfig {
@@ -69,7 +70,10 @@ public class OAuth2ServerConfig {
         @Override
         public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
             //endpoints.tokenStore(new RedisTokenStore(redisConnectionFactory)).authenticationManager(authenticationManager);
-        	endpoints.tokenStore(new InMemoryTokenStore()).authenticationManager(authenticationManager)
+        	//endpoints.tokenStore(new InMemoryTokenStore()).authenticationManager(authenticationManager)
+        	JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
+        	jwtAccessTokenConverter.setSigningKey("csfrez");
+        	endpoints.tokenStore(new JwtTokenStore(jwtAccessTokenConverter)).accessTokenConverter(jwtAccessTokenConverter).authenticationManager(authenticationManager)
         		.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
         }
 
