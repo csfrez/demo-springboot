@@ -11,8 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @Configuration
@@ -21,6 +19,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		// @formatter:off
+//        http.requestMatchers().anyRequest()
+//            .and()
+//            .authorizeRequests()
+//            .antMatchers("/oauth/*").permitAll();
+        // @formatter:on
 //		http.authorizeRequests()
 //				.antMatchers("/","/home","/actuator/**","/country/**","/druid/**").permitAll()
 //				.anyRequest().authenticated();
@@ -54,17 +58,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return NoOpPasswordEncoder.getInstance();
     }*/
 	
-	@Bean
+	/*@Bean
 	public PasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
-	}
+	}*/
 	
 	
 	@Bean
     @Override
     public UserDetailsService userDetailsService() {
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		String finalPassword = bCryptPasswordEncoder.encode("123456");
+		//BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+		String finalPassword = "123456"; //bCryptPasswordEncoder.encode("123456");
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
         manager.createUser(User.withUsername("user_1").password(finalPassword).authorities("USER").build());
         manager.createUser(User.withUsername("user_2").password(finalPassword).authorities("USER").build());

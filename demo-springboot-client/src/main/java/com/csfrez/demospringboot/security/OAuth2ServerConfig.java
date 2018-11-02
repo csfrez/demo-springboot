@@ -2,10 +2,11 @@ package com.csfrez.demospringboot.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -14,8 +15,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+import org.springframework.security.oauth2.provider.token.store.redis.RedisTokenStore;
 
 @Configuration
 public class OAuth2ServerConfig {
@@ -34,6 +34,21 @@ public class OAuth2ServerConfig {
         @Override
         public void configure(HttpSecurity http) throws Exception {
         	http.authorizeRequests().antMatchers("/order/**").authenticated();//配置order访问控制，必须认证过后才可以访问
+        	
+        	// @formatter:off
+//            http
+//                    // Since we want the protected resources to be accessible in the UI as well we need
+//                    // session creation to be allowed (it's disabled by default in 2.0.6)
+//                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+////                    .and()
+////                    .requestMatchers().anyRequest()
+//                    .and()
+//                    .anonymous()
+//                    .and()
+//                    .authorizeRequests()
+//                    //.antMatchers("/product/**").access("#oauth2.hasScope('select') and hasPermission('delete')")
+//                    .antMatchers("/order/**").authenticated();//配置order访问控制，必须认证过后才可以访问
+            // @formatter:on
         }
     }
 
@@ -45,13 +60,17 @@ public class OAuth2ServerConfig {
         @Autowired
         AuthenticationManager authenticationManager;
         
-//        @Autowired
-//        RedisConnectionFactory redisConnectionFactory;
+        @Autowired
+        RedisConnectionFactory redisConnectionFactory;
 
+        @Autowired
+        UserDetailsService userDetailsService;
+        
         @Override
         public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        	BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-    		String finalPassword = bCryptPasswordEncoder.encode("123456");
+        	//BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+    		String finalPassword = "123456"; //bCryptPasswordEncoder.encode("123456");
+    		System.out.println("finalPassword="+finalPassword);
             //配置两个客户端,一个用于password认证一个用于client认证
             clients.inMemory().withClient("client_1")
                     .resourceIds(DEMO_RESOURCE_ID)
@@ -69,11 +88,13 @@ public class OAuth2ServerConfig {
 
         @Override
         public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-            //endpoints.tokenStore(new RedisTokenStore(redisConnectionFactory)).authenticationManager(authenticationManager);
-        	//endpoints.tokenStore(new InMemoryTokenStore()).authenticationManager(authenticationManager)
-        	JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
-        	jwtAccessTokenConverter.setSigningKey("csfrez");
-        	endpoints.tokenStore(new JwtTokenStore(jwtAccessTokenConverter)).accessTokenConverter(jwtAccessTokenConverter).authenticationManager(authenticationManager)
+        	//JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
+        	//jwtAccessTokenConverter.setSigningKey("csfrez");
+        	//endpoints.tokenStore(new JwtTokenStore(jwtAccessTokenConverter)).accessTokenConverter(jwtAccessTokenConverter).authenticationManager(authenticationManager)
+        	//endpoints.tokenStore(new InMemoryTokenStore())
+            endpoints.tokenStore(new RedisTokenStore(redisConnectionFactory))
+        		.authenticationManager(authenticationManager)
+        		.userDetailsService(userDetailsService)
         		.allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST);
         }
 
