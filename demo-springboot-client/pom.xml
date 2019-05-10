@@ -12,8 +12,7 @@
 	<parent>
 		<groupId>com.csfrez</groupId>
 		<artifactId>demo-springboot</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
@@ -30,11 +29,6 @@
 		<dependency>
 		    <groupId>com.csfrez</groupId>
 		    <artifactId>demo-springboot-dubbo</artifactId>
-		</dependency>
-		
-		<dependency>
-		    <groupId>com.csfrez</groupId>
-		    <artifactId>demo-springboot-security</artifactId>
 		</dependency>
 		
 		<dependency>

@@ -12,8 +12,7 @@
 	<parent>
 		<groupId>com.csfrez</groupId>
 		<artifactId>demo-springboot</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>1.0.1-SNAPSHOT</version>
 	</parent>
 	
 	<dependencies>
@@ -21,6 +20,16 @@
 		<dependency>
 		    <groupId>com.alibaba.boot</groupId>
 		    <artifactId>dubbo-spring-boot-starter</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>log4j</groupId>
+					<artifactId>log4j</artifactId>
+				</exclusion>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
