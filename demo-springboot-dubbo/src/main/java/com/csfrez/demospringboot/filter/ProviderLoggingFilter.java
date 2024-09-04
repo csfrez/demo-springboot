@@ -1,13 +1,13 @@
 package com.csfrez.demospringboot.filter;
 
-import org.apache.dubbo.common.Constants;
+import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.rpc.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-@Activate(group = Constants.PROVIDER, order = -200000)
+@Activate(group = CommonConstants.PROVIDER, order = -200000)
 public class ProviderLoggingFilter implements Filter {
 	
     private static final Logger logger = LoggerFactory.getLogger(ProviderLoggingFilter.class);
