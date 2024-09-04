@@ -14,7 +14,7 @@ public class ProviderLoggingFilter implements Filter {
 
     public Result invoke(Invoker<?> invoker, Invocation invocation) throws RpcException {
         try {
-            logger.info("接受请求:[ip={}, inferface={}${}, args={}]", new Object[] {RpcContext.getContext().getRemoteAddressString(), invoker.getUrl().getServiceInterface(), invocation.getMethodName(), invocation.getArguments()});
+            logger.info("接收请求:[ip={}, interface={}${}, args={}]", new Object[] {RpcContext.getContext().getRemoteAddressString(), invoker.getUrl().getServiceInterface(), invocation.getMethodName(), invocation.getArguments()});
         } catch (Exception ignore) {
         }
         Result result = invoker.invoke(invocation);
