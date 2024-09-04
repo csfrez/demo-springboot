@@ -33,7 +33,7 @@ public class ConsumerLoggingFilter implements Filter {
         Result result = invoker.invoke(invocation);
         if (!monitorServiceFlag && result != null) {
             try {
-                logger.info("接受结果:[{}]", new Object[] {result.getValue()});
+                logger.info("接收结果:[{}]", new Object[] {result.getValue()});
             } catch (Exception ignore) {
             }
         }

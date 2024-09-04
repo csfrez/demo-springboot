@@ -1,14 +1,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    
-    <groupId>com.csfrez</groupId>
-	<artifactId>demo-springboot</artifactId>
-	<version>2.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
 
-	<name>demo-springboot</name>
-	<description>Demo project for Spring Boot</description>
+    <groupId>com.csfrez</groupId>
+    <artifactId>demo-springboot</artifactId>
+    <version>2.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>demo-springboot</name>
+    <description>Demo project for Spring Boot</description>
 
     <modules>
         <module>demo-springboot-admin</module>
@@ -19,30 +19,30 @@
         <module>demo-springboot-server</module>
     </modules>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
 
-        <spring-boot.version>2.1.4.RELEASE</spring-boot.version>
-        <admin.springboot.version>2.1.4</admin.springboot.version>
+        <spring-boot.version>2.7.18</spring-boot.version>
+        <admin.springboot.version>2.7.16</admin.springboot.version>
         <dubbo.version>2.7.1</dubbo.version>
         <duubo.springboot.version>2.7.1</duubo.springboot.version>
-    	<mybatis.springboot.version>2.0.1</mybatis.springboot.version>
-    	<druid.springboot.version>1.1.16</druid.springboot.version>
-    	<mapper.springboot.version>2.1.5</mapper.springboot.version>
-    	<pagehelper.springboot.version>1.2.10</pagehelper.springboot.version>
+        <mybatis.springboot.version>2.3.2</mybatis.springboot.version>
+        <druid.springboot.version>1.2.23</druid.springboot.version>
+        <mapper.springboot.version>4.3.0</mapper.springboot.version>
+        <pagehelper.springboot.version>2.1.0</pagehelper.springboot.version>
 
         <maven-jar.version>3.1.1</maven-jar.version>
-        <maven-compiler.version>3.8.0</maven-compiler.version>
-        <maven-source.version>3.0.1</maven-source.version>
-        <maven-enforcer.version>3.0.0-M2</maven-enforcer.version>
-        <maven-deploy.version>3.0.0-M1</maven-deploy.version>
+        <maven-compiler.version>3.8.1</maven-compiler.version>
+        <maven-source.version>3.2.1</maven-source.version>
+        <maven-enforcer.version>3.4.1</maven-enforcer.version>
+        <maven-deploy.version>3.1.1</maven-deploy.version>
 
     </properties>
-    
+
     <dependencyManagement>
-	    <dependencies>
+        <dependencies>
             <!-- Spring Boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -83,56 +83,70 @@
                 <type>pom</type>
             </dependency>
 
-	    	<dependency>
-			    <groupId>org.apache.dubbo</groupId>
-			    <artifactId>dubbo-spring-boot-starter</artifactId>
-			    <version>${duubo.springboot.version}</version>
-			</dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${duubo.springboot.version}</version>
+            </dependency>
 
-			<dependency>
-				<groupId>org.mybatis.spring.boot</groupId>
-				<artifactId>mybatis-spring-boot-starter</artifactId>
-				<version>${mybatis.springboot.version}</version>
-			</dependency>
-			
-			<dependency>
-			    <groupId>com.alibaba</groupId>
-			    <artifactId>druid-spring-boot-starter</artifactId>
-			    <version>${druid.springboot.version}</version>
-			</dependency>
-			
-			<dependency>
-			    <groupId>tk.mybatis</groupId>
-			    <artifactId>mapper-spring-boot-starter</artifactId>
-			    <version>${mapper.springboot.version}</version>
-			</dependency>
-			
-			<!--pagehelper-->
-	        <dependency>
-	            <groupId>com.github.pagehelper</groupId>
-	            <artifactId>pagehelper-spring-boot-starter</artifactId>
-	            <version>${pagehelper.springboot.version}</version>
-	        </dependency>
-			
-			<dependency>
-			    <groupId>com.csfrez</groupId>
-			    <artifactId>demo-springboot-dao</artifactId>
-			    <version>${project.version}</version>
-			</dependency>
-			
-			<dependency>
-			    <groupId>com.csfrez</groupId>
-			    <artifactId>demo-springboot-dubbo</artifactId>
-			    <version>${project.version}</version>
-			</dependency>
-			
-			<dependency>
-			    <groupId>com.csfrez</groupId>
-			    <artifactId>demo-springboot-security</artifactId>
-			    <version>${project.version}</version>
-			</dependency>
-	    
-	    </dependencies>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.springboot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.springboot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper-spring-boot-starter</artifactId>
+                <version>${mapper.springboot.version}</version>
+            </dependency>
+
+            <!--pagehelper-->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.springboot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.49</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+            <dependency>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
+                <version>8.4.0</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.csfrez</groupId>
+                <artifactId>demo-springboot-dao</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.csfrez</groupId>
+                <artifactId>demo-springboot-dubbo</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.csfrez</groupId>
+                <artifactId>demo-springboot-security</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+        </dependencies>
     </dependencyManagement>
 
     <build>

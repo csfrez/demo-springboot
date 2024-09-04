@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class DemoConsumerController {
 
-    @Reference(version = "1.0.0", application = "${dubbo.application.id}")
+    @Reference
     private DemoService demoService;
 
     @RequestMapping("/sayHello")
