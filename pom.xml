@@ -26,8 +26,7 @@
 
         <spring-boot.version>2.7.18</spring-boot.version>
         <admin.springboot.version>2.7.16</admin.springboot.version>
-        <dubbo.version>2.7.1</dubbo.version>
-        <duubo.springboot.version>2.7.1</duubo.springboot.version>
+        <dubbo.version>2.7.23</dubbo.version>
         <mybatis.springboot.version>2.3.2</mybatis.springboot.version>
         <druid.springboot.version>1.2.23</druid.springboot.version>
         <mapper.springboot.version>4.3.0</mapper.springboot.version>
@@ -73,20 +72,42 @@
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo</artifactId>
                 <version>${dubbo.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework</groupId>
+                        <artifactId>spring</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>javax.servlet</groupId>
+                        <artifactId>servlet-api</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>log4j</groupId>
+                        <artifactId>log4j</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.dubbo</groupId>
+                <artifactId>dubbo-spring-boot-starter</artifactId>
+                <version>${dubbo.version}</version>
             </dependency>
 
-            <!-- Zookeeper dependencies -->
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-dependencies-zookeeper</artifactId>
                 <version>${dubbo.version}</version>
                 <type>pom</type>
-            </dependency>
-
-            <dependency>
-                <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo-spring-boot-starter</artifactId>
-                <version>${duubo.springboot.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <artifactId>log4j</artifactId>
+                        <groupId>log4j</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
 
             <dependency>

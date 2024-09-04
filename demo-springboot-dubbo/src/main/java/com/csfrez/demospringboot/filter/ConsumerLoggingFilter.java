@@ -1,7 +1,7 @@
 package com.csfrez.demospringboot.filter;
 
-import org.apache.dubbo.common.Constants;
 import org.apache.dubbo.common.URL;
+import org.apache.dubbo.common.constants.CommonConstants;
 import org.apache.dubbo.common.extension.Activate;
 import org.apache.dubbo.monitor.MonitorService;
 import org.apache.dubbo.rpc.*;
@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * 调用其他dubbo服务日志拦截器
  *
  */
-@Activate(group = Constants.CONSUMER, order = 200000)
+@Activate(group = CommonConstants.CONSUMER, order = 200000)
 public class ConsumerLoggingFilter implements Filter {
 
     private static final Logger logger = LoggerFactory.getLogger(ConsumerLoggingFilter.class);
