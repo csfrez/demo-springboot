@@ -12,7 +12,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -21,7 +20,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
-@ResponseBody
 @Slf4j
 public class GlobalExceptionHandler {
 
@@ -32,9 +30,9 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseResult<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex, HttpServletResponse httpServletResponse) {
+    public ResponseResult<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
         log.error("[GlobalExceptionHandler][handleMethodArgumentNotValidException] 参数校验异常", ex);
-        return wrapperBindingResult(ex.getBindingResult(), httpServletResponse);
+        return wrapperBindingResult(ex.getBindingResult());
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
@@ -42,26 +40,13 @@ public class GlobalExceptionHandler {
         log.error("[GlobalExceptionHandler][handleMissingServletRequestParameterException] 参数校验异常", ex);
         String errorMessage = String.format("必填请求参数%s不存在", ex.getParameterName());
         return ResponseResult.failed(errorMessage);
-        //return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(BindException.class)
-    public ResponseResult<String> handleBindException(BindException ex, HttpServletResponse httpServletResponse) {
+    public ResponseResult<String> handleBindException(BindException ex) {
         log.error("[GlobalExceptionHandler][handleBindException] 参数校验异常", ex);
-        return wrapperBindingResult(ex.getBindingResult(), httpServletResponse);
-        /*Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getFieldErrors().forEach(error ->
-                errors.put(error.getField(), error.getDefaultMessage()));
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);*/
+        return wrapperBindingResult(ex.getBindingResult());
     }
-
-    /*@ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getFieldErrors().forEach(error ->
-                errors.put(error.getField(), error.getDefaultMessage()));
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }*/
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseResult<Void> handleIllegalArgumentException(IllegalArgumentException ex) {
@@ -101,7 +86,7 @@ public class GlobalExceptionHandler {
             } else {
                 return error.getDefaultMessage();
             }
-        }).collect(Collectors.toList());
+        }).sorted().collect(Collectors.toList());
         String errorMsg = StrUtil.join("; ", errors);
         return ResponseResult.failed(errorMsg);
     }
