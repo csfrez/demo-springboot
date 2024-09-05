@@ -6,10 +6,6 @@ import cn.hutool.json.JSONUtil;
 import com.csfrez.demospringboot.dto.User;
 import com.csfrez.demospringboot.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.core.MethodParameter;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
