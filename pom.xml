@@ -18,6 +18,7 @@
         <module>demo-springboot-security</module>
         <module>demo-springboot-server</module>
         <module>demo-springboot-common</module>
+        <module>demo-springboot-design-pattern</module>
     </modules>
 
     <properties>
