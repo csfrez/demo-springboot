@@ -19,6 +19,7 @@
         <module>demo-springboot-server</module>
         <module>demo-springboot-common</module>
         <module>demo-springboot-design-pattern</module>
+        <module>demo-springboot-file</module>
     </modules>
 
     <properties>
@@ -189,6 +190,12 @@
             <dependency>
                 <groupId>com.csfrez</groupId>
                 <artifactId>demo-springboot-common</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.csfrez</groupId>
+                <artifactId>demo-springboot-file</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
