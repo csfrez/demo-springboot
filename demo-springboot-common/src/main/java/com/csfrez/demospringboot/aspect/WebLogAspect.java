@@ -1,4 +1,4 @@
-package com.csfrez.demospringboot.advice;
+package com.csfrez.demospringboot.aspect;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;

@@ -3,7 +3,7 @@ package com.csfrez.demospringboot.web;
 
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONUtil;
-import com.csfrez.demospringboot.chain.dto.User;
+import com.csfrez.demospringboot.dto.User;
 import com.csfrez.demospringboot.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
