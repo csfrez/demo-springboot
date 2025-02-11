@@ -20,6 +20,7 @@
         <module>demo-springboot-common</module>
         <module>demo-springboot-design-pattern</module>
         <module>demo-springboot-file</module>
+        <module>demo-springboot-jsqlparser</module>
     </modules>
 
     <properties>

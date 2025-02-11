@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://10.11.0.142:3306/demo
+    username: root
+    password: 123456
+  server:
+    port: 8080
+
+app:
+  user-type:
+    admin: ADMIN
+    user: USER
+    guest: GUEST
+    vip: VIP
+    moderator: MODERATOR
