@@ -14,7 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.Map;
@@ -83,9 +85,9 @@ public class FileController {
         byte[] pdfBytes = imageToPdfService.convertImagesToPdf2(files);
 
         // 存储到本地
-        String fileName = "converted_" + System.currentTimeMillis() + ".pdf";
-        String downloadName = fileStorageService.storeFile(pdfBytes, fileName);
-        String downloadUrl = downloadBaseUrl + downloadName;
+        String fileName =  System.currentTimeMillis() + ".pdf";
+        fileStorageService.storeFile(pdfBytes, fileName);
+        String downloadUrl = downloadBaseUrl + fileName;
 
         Long duration = System.currentTimeMillis() - startTime;
         log.info("convertAndSave {} files to PDF in {} ms", files.length, duration);
@@ -94,19 +96,15 @@ public class FileController {
     }
 
     @GetMapping("/download/{fileName:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) {
-        try {
-            Path filePath = fileStorageService.loadFile(fileName);
-            Resource resource = new UrlResource(filePath.toUri());
+    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) throws Exception {
+        Path filePath = fileStorageService.loadFile(fileName);
+        Resource resource = new UrlResource(filePath.toUri());
 
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION,
-                            "attachment; filename=\"" + resource.getFilename() + "\"")
-                    .contentType(MediaType.APPLICATION_PDF)
-                    .body(resource);
-        } catch (Exception e) {
-            throw new RuntimeException("下载失败: " + e.getMessage());
-        }
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + resource.getFilename() + "\"")
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(resource);
     }
 
 }

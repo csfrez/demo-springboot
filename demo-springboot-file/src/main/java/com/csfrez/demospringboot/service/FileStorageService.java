@@ -1,10 +1,10 @@
 package com.csfrez.demospringboot.service;
 
-import cn.hutool.core.util.IdUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -30,23 +30,19 @@ public class FileStorageService {
         }
     }
 
-    public String storeFile(byte[] content, String fileName) {
-        // 生成唯一文件名
-        String uniqueName = IdUtil.fastSimpleUUID() + "_" + fileName;
-        Path targetPath = Paths.get(storagePath).resolve(uniqueName);
-
+    public Path storeFile(byte[] content, String fileName) {
+        Path targetPath = Paths.get(storagePath).resolve(fileName);
         try {
-            Files.write(targetPath, content);
-            return uniqueName;
+            return Files.write(targetPath, content);
         } catch (IOException e) {
             throw new RuntimeException("文件存储失败: " + e.getMessage());
         }
     }
 
-    public Path loadFile(String fileName) {
+    public Path loadFile(String fileName) throws FileNotFoundException {
         Path filePath = Paths.get(storagePath).resolve(fileName);
         if (!Files.exists(filePath)) {
-            throw new RuntimeException("文件未找到: " + fileName);
+            throw new FileNotFoundException("文件未找到: " + fileName);
         }
         return filePath;
     }
