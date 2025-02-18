@@ -53,6 +53,14 @@ public class FileStorageService {
         return filePath;
     }
 
+    public byte[] readFileContent(String fileName) throws IOException {
+        Path filePath = Paths.get(storagePath).resolve(fileName);
+        if (!Files.exists(filePath)) {
+            throw new RuntimeException("文件不存在");
+        }
+        return Files.readAllBytes(filePath);
+    }
+
     public static String detectFileType(Path filePath) throws IOException {
         try (InputStream is = Files.newInputStream(filePath)) {
             byte[] header = new byte[16];
