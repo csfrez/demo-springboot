@@ -14,9 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.util.Collections;
 import java.util.Map;
@@ -31,7 +29,7 @@ import java.util.Map;
 @Slf4j
 public class FileController {
 
-    @Value("${pdf.download.base-url}")
+    @Value("${file.download.base-url}")
     private String downloadBaseUrl;
 
     @Autowired
@@ -99,11 +97,23 @@ public class FileController {
     public ResponseEntity<Resource> downloadFile(@PathVariable String fileName) throws Exception {
         Path filePath = fileStorageService.loadFile(fileName);
         Resource resource = new UrlResource(filePath.toUri());
+        String contentType = MediaType.APPLICATION_OCTET_STREAM_VALUE;
+        String extension = fileName.substring(fileName.lastIndexOf(".") + 1).toLowerCase();
+        if ("jpg".equals(extension) || "jpeg".equals(extension)) {
+            contentType = MediaType.IMAGE_JPEG_VALUE;
+        } else if ("png".equals(extension)) {
+            contentType = MediaType.IMAGE_PNG_VALUE;
+        } else if ("gif".equals(extension)) {
+            contentType = MediaType.IMAGE_GIF_VALUE;
+        } else if ("pdf".equals(extension)) {
+            contentType = MediaType.APPLICATION_PDF_VALUE;
+        }
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                         "attachment; filename=\"" + resource.getFilename() + "\"")
-                .contentType(MediaType.APPLICATION_PDF)
+//                .contentType(MediaType.APPLICATION_PDF)
+                .header(HttpHeaders.CONTENT_TYPE, contentType)
                 .body(resource);
     }
 

@@ -17,8 +17,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 
 /**
  * @author
@@ -77,13 +75,8 @@ public class ImageToPdfService {
     public byte[] convertImagesToPdf2(MultipartFile[] files) throws IOException {
         try (PDDocument document = new PDDocument()) {
             for (MultipartFile file : files) {
-//                // 获取原始图片
-//                BufferedImage originalImage = ImageIO.read(file.getInputStream());
-
-                // 使用临时文件处理大图（替代直接读取到内存）
-                Path tempFile = Files.createTempFile("pdf-img-", ".tmp");
-                file.transferTo(tempFile);
-                try (InputStream is = Files.newInputStream(tempFile)) {
+                try (InputStream is = file.getInputStream()) {
+                    // 获取原始图片
                     BufferedImage originalImage = ImageIO.read(is);
                     // 创建与图片等大的PDF页面
                     PDPage page = new PDPage(new PDRectangle(originalImage.getWidth(), originalImage.getHeight()));
@@ -109,8 +102,6 @@ public class ImageToPdfService {
                         }
                         contentStream.drawImage(pdImage, 0, 0);
                     }
-                } finally {
-                    Files.deleteIfExists(tempFile);
                 }
             }
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
