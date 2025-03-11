@@ -23,7 +23,9 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * @author
@@ -52,16 +54,17 @@ public class ImageController {
 
         try {
             // 生成唯一文件名
-            String compressedFilename = IdUtil.fastSimpleUUID() + ".jpg";
+            String compressedFilename = IdUtil.getSnowflakeNextIdStr() + ".jpg";
             Path outputPath = fileStorageService.buildFilePath(compressedFilename);
             //Path outputPath = Paths.get(imageStorageLocation).resolve(compressedFilename);
 
             try (InputStream inputStream = file.getInputStream()){
                 // 压缩图片并保存
                 Thumbnails.of(inputStream)
-                        .scale(1)
-                        .outputFormat("jpg")
-                        .outputQuality(0.5)
+//                        .scale(1)
+                        .size(2000, 1500)
+                        .outputFormat("jpeg")
+                        .outputQuality(1)
                         .toFile(outputPath.toFile());
             }
             String downloadUrl = downloadBaseUrl + compressedFilename;
@@ -73,6 +76,36 @@ public class ImageController {
 
             return ResponseEntity.ok().body(Collections.singletonMap("url", downloadUrl));
 
+        } catch (IOException e) {
+            log.error("文件处理失败", e); // 记录错误日志
+            return ResponseEntity.internalServerError().body("文件处理失败");
+        }
+    }
+
+    @PostMapping("/compress")
+    public ResponseEntity<?> compressImage(@RequestParam("files") MultipartFile[] files) {
+        if (files.length == 0) {
+            return ResponseEntity.badRequest().body("请选择要上传的文件");
+        }
+        List<String> downloadUrlList = new ArrayList<>();
+        try {
+            for (MultipartFile file : files) {
+                // 生成唯一文件名
+                String compressedFilename = IdUtil.getSnowflakeNextIdStr() + ".jpg";
+                Path outputPath = fileStorageService.buildFilePath(compressedFilename);
+                try (InputStream inputStream = file.getInputStream()){
+                    // 压缩图片并保存
+                    Thumbnails.of(inputStream)
+//                        .scale(1)
+                            .size(2000, 1500)
+                            .outputFormat("jpeg")
+                            .outputQuality(1)
+                            .toFile(outputPath.toFile());
+                }
+                String downloadUrl = downloadBaseUrl + compressedFilename;
+                downloadUrlList.add(downloadUrl);
+            }
+            return ResponseEntity.ok().body(downloadUrlList);
         } catch (IOException e) {
             log.error("文件处理失败", e); // 记录错误日志
             return ResponseEntity.internalServerError().body("文件处理失败");
