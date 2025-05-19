@@ -29,24 +29,34 @@ public class GlobalExceptionHandler {
         return ResponseResult.failed(ResultCode.NOT_FOUND.getCode(), ex.getMessage());
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseResult<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
-        log.error("[GlobalExceptionHandler][handleMethodArgumentNotValidException] 参数校验异常", ex);
-        return wrapperBindingResult(ex.getBindingResult());
+    @ExceptionHandler({BindException.class, MethodArgumentNotValidException.class, MissingServletRequestParameterException.class})
+    public ResponseResult<String> handleParameterException(BindException ex) {
+        log.error("[GlobalExceptionHandler][handleParameterException] 参数校验异常", ex);
+        String msg = ex.getFieldErrors().stream()
+                .map(error -> error.getField() + " " + error.getDefaultMessage())
+                .reduce((s1, s2) -> s1 + "," + s2)
+                .orElse("");
+        return ResponseResult.failed(ResultCode.PARAM_ERROR.getCode(), msg);
     }
 
-    @ExceptionHandler(MissingServletRequestParameterException.class)
-    public ResponseResult<String> handleMissingServletRequestParameterException(MissingServletRequestParameterException ex) {
-        log.error("[GlobalExceptionHandler][handleMissingServletRequestParameterException] 参数校验异常", ex);
-        String errorMessage = String.format("必填请求参数%s不存在", ex.getParameterName());
-        return ResponseResult.failed(errorMessage);
-    }
-
-    @ExceptionHandler(BindException.class)
-    public ResponseResult<String> handleBindException(BindException ex) {
-        log.error("[GlobalExceptionHandler][handleBindException] 参数校验异常", ex);
-        return wrapperBindingResult(ex.getBindingResult());
-    }
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    public ResponseResult<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+//        log.error("[GlobalExceptionHandler][handleMethodArgumentNotValidException] 参数校验异常", ex);
+//        return wrapperBindingResult(ex.getBindingResult());
+//    }
+//
+//    @ExceptionHandler(MissingServletRequestParameterException.class)
+//    public ResponseResult<String> handleMissingServletRequestParameterException(MissingServletRequestParameterException ex) {
+//        log.error("[GlobalExceptionHandler][handleMissingServletRequestParameterException] 参数校验异常", ex);
+//        String errorMessage = String.format("必填请求参数%s不存在", ex.getParameterName());
+//        return ResponseResult.failed(errorMessage);
+//    }
+//
+//    @ExceptionHandler(BindException.class)
+//    public ResponseResult<String> handleBindException(BindException ex) {
+//        log.error("[GlobalExceptionHandler][handleBindException] 参数校验异常", ex);
+//        return wrapperBindingResult(ex.getBindingResult());
+//    }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseResult<Void> handleIllegalArgumentException(IllegalArgumentException ex) {
@@ -59,7 +69,7 @@ public class GlobalExceptionHandler {
         // 记录异常日志
         log.error("[GlobalExceptionHandler][handleRuntimeException] RuntimeException", ex);
 
-        if(ex instanceof CustomException){
+        if (ex instanceof CustomException) {
             return ResponseResult.failed(((CustomException) ex).getCode(), ex.getMessage());
         }
 
@@ -72,7 +82,7 @@ public class GlobalExceptionHandler {
     public ResponseResult<Void> handleGenericException(Exception ex) {
         // 记录异常日志
         log.error("[GlobalExceptionHandler][handleGenericException] Exception", ex);
-        if(ex instanceof CustomException){
+        if (ex instanceof CustomException) {
             return ResponseResult.failed(((CustomException) ex).getCode(), ex.getMessage());
         }
         // 返回自定义的错误响应
@@ -103,7 +113,6 @@ public class GlobalExceptionHandler {
         //return ResponseEntity.internalServerError().body(errorMsg.toString());
         return this.wrapperBindingResult(bindingResult);
     }
-
 
 
 }

@@ -3,6 +3,7 @@ package com.csfrez.demospringboot.web;
 
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONUtil;
+import com.csfrez.demospringboot.base.ResponseResult;
 import com.csfrez.demospringboot.dto.User;
 import com.csfrez.demospringboot.exception.CustomException;
 import lombok.extern.slf4j.Slf4j;
@@ -69,7 +70,9 @@ public class WebController {
     }
 
     @PostMapping("/user3")
-    public String createUser(@Valid @RequestBody User user) {
-        return "User parameters are valid: age=" + user.getAge();
+    public ResponseResult<User> createUser(@Valid @RequestBody User user) {
+//        StrUtil.length(user.getName())
+        log.info("user: {}", JSONUtil.toJsonStr(user));
+        return ResponseResult.success(user);
     }
 }

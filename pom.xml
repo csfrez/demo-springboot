@@ -37,8 +37,8 @@
         <mapper.springboot.version>4.3.0</mapper.springboot.version>
         <pagehelper.springboot.version>2.1.0</pagehelper.springboot.version>
         <mysql-connector.version>8.4.0</mysql-connector.version>
-
         <guava.version>33.3.0-jre</guava.version>
+        <spel-validator.version>0.5.0-beta</spel-validator.version>
 
         <maven-jar.version>3.1.1</maven-jar.version>
         <maven-compiler.version>3.8.1</maven-compiler.version>
@@ -167,6 +167,13 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/cn.sticki/spel-validator-javax -->
+            <dependency>
+                <groupId>cn.sticki</groupId>
+                <artifactId>spel-validator-javax</artifactId>
+                <version>${spel-validator.version}</version>
             </dependency>
 
 
