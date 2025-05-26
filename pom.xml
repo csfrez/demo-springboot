@@ -22,6 +22,7 @@
         <module>demo-springboot-file</module>
         <module>demo-springboot-jsqlparser</module>
         <module>demo-springboot-retry</module>
+        <module>demo-springboot-mybatis-plus</module>
     </modules>
 
     <properties>
@@ -34,10 +35,11 @@
         <admin.springboot.version>2.7.16</admin.springboot.version>
         <dubbo.version>2.7.23</dubbo.version>
         <mybatis.springboot.version>2.3.2</mybatis.springboot.version>
-        <druid.springboot.version>1.2.23</druid.springboot.version>
+        <druid.springboot.version>1.2.24</druid.springboot.version>
         <mapper.springboot.version>4.3.0</mapper.springboot.version>
         <pagehelper.springboot.version>2.1.0</pagehelper.springboot.version>
         <mysql-connector.version>8.4.0</mysql-connector.version>
+        <mybatis-plus.version>3.5.12</mybatis-plus.version>
         <guava.version>33.3.0-jre</guava.version>
         <spel-validator.version>0.5.0-beta</spel-validator.version>
 
@@ -135,6 +137,19 @@
                 <groupId>tk.mybatis</groupId>
                 <artifactId>mapper-spring-boot-starter</artifactId>
                 <version>${mapper.springboot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-generator</artifactId>
+                <version>${mybatis-plus.version}</version>
+                <scope>provided</scope>
             </dependency>
 
             <!--pagehelper-->
