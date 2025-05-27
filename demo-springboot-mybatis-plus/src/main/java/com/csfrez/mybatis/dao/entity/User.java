@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author csfrez
- * @since 2025-05-26
+ * @since 2025-05-27
  */
 @Getter
 @Setter

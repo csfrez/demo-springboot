@@ -50,7 +50,7 @@ public class CodeGenerator {
                         .serviceTemplate("/templates/service.java") // 自定义service模板
                         .controllerBuilder().enableRestStyle()  // 开启生成@RestController 控制器
                         .mapperBuilder().enableBaseResultMap()
-                        .enableFileOverride()
+                        .enableFileOverride().disableMapper()  // 不生成mapper
                 )
 //                .templateConfig(builder ->
 //                    builder.service("/templates/service.java")// 自定义service模板
