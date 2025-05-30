@@ -1,0 +1,23 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: demo-springboot-websocket
+  redis:
+    host: 10.11.0.136
+    port: 6379
+  rabbitmq:
+    host: 10.11.0.136
+    port: 5672
+    username: admin
+    password: admin123
+    listener:
+      simple:
+        idle-event-interval: 30s
+
+websocket:
+  path: "/socket"  # 可配置的WebSocket路径
+  token:
+    enable-heartbeat: true  # 启用心跳检测
+    heartbeat-interval: 30  # 心跳间隔
+    timeout: 60  # 心跳超时时间

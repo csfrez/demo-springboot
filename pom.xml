@@ -23,6 +23,7 @@
         <module>demo-springboot-jsqlparser</module>
         <module>demo-springboot-retry</module>
         <module>demo-springboot-mybatis-plus</module>
+        <module>demo-springboot-websocket</module>
     </modules>
 
     <properties>
