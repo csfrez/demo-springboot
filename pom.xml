@@ -24,6 +24,7 @@
         <module>demo-springboot-retry</module>
         <module>demo-springboot-mybatis-plus</module>
         <module>demo-springboot-websocket</module>
+        <module>demo-springboot-download</module>
     </modules>
 
     <properties>
@@ -43,6 +44,7 @@
         <mybatis-plus.version>3.5.12</mybatis-plus.version>
         <guava.version>33.3.0-jre</guava.version>
         <spel-validator.version>0.5.0-beta</spel-validator.version>
+        <concept-download.version>2.1.0</concept-download.version>
 
         <maven-jar.version>3.1.1</maven-jar.version>
         <maven-compiler.version>3.8.1</maven-compiler.version>
@@ -191,6 +193,13 @@
                 <groupId>cn.sticki</groupId>
                 <artifactId>spel-validator-javax</artifactId>
                 <version>${spel-validator.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.github.linyuzai/concept-download-spring-boot-starter -->
+            <dependency>
+                <groupId>com.github.linyuzai</groupId>
+                <artifactId>concept-download-spring-boot-starter</artifactId>
+                <version>${concept-download.version}</version>
             </dependency>
 
 

@@ -1,0 +1,43 @@
+server:
+  port: 8080
+  tomcat:
+    basedir: ./tomcat-base
+spring:
+  application:
+    name: demo-springboot-download
+  servlet:
+    multipart:
+      max-request-size: 200MB
+      max-file-size: 200MB # 文件上传限制
+logging:
+  level:
+    root: INFO
+
+concept:
+  download:
+    source:
+      cache:
+        enabled: true #网络资源缓存是否启用
+        path: source-cache #网络资源缓存路径，默认为 user.home/concept/download
+        delete: false #下载结束后网络资源缓存是否删除
+    compress:
+      format: zip #压缩格式
+      password: 123456 #压缩密码
+      cache:
+        enabled: true #压缩缓存是否启用
+        path: compress-cache #压缩缓存路径，默认为 user.home/concept/download
+        delete: false #下载结束后压缩缓存是否删除
+    response:
+      headers: #额外的响应头
+        header1 : 1
+        header2 : 2
+    logger:
+      enabled: true #日志总开关
+      standard:
+        enabled: true #标准流程日志是否启用
+      progress:
+        enabled: true #进度计算日志是否启用，包括加载进度，压缩进度，写入响应进度
+        duration: 500 #进度计算日志输出间隔，ms
+        percentage: true #进度计算日志是否使用百分比输出
+      time-spent:
+        enabled: true #时间计算日志是否启用

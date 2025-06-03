@@ -1,5 +1,6 @@
 package com.csfrez.demospringboot.web;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +10,7 @@ import java.io.*;
 import java.net.URLEncoder;
 
 @Controller
+@Slf4j
 public class DownloadController {
 
     private static final String SRC_PATH = "E:/tmp/file";
@@ -46,10 +48,12 @@ public class DownloadController {
                 os.flush();
                 times++;
                 double progress = (double) times / total * 100;
-                System.out.println(i + ", 下载进度：" + String.format("%.2f", progress) + "%");
+//                System.out.println(i + ", 下载进度：" + String.format("%.2f", progress) + "%");
+                log.info("小组大小{}，下载进度：{}", i, String.format("%.2f", progress) + "%");
             }
         } catch (IOException e) {
             throw new RuntimeException("下载文件失败");
         }
     }
+
 }
