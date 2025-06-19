@@ -5,14 +5,13 @@ import io.netty.channel.*;
 import io.netty.handler.codec.http.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 /**
  * @author
  * @date 2025/5/30 15:07
  * @email
  */
-@Component
+//@Component
 @ChannelHandler.Sharable
 @Slf4j
 public class WebSocketHandshakeHandler extends SimpleChannelInboundHandler<FullHttpRequest> {

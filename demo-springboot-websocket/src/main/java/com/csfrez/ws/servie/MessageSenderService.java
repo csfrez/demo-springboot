@@ -1,7 +1,6 @@
 package com.csfrez.ws.servie;
 
 import com.csfrez.ws.model.MyMessage;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
