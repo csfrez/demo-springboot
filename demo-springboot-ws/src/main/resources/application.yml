@@ -1,0 +1,22 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: demo-springboot-ws
+  rabbitmq:
+    host: 10.11.0.136
+    port: 5672
+    username: admin
+    password: admin123
+    listener:
+      simple:
+        idle-event-interval: 30s
+  redis:
+    host: 10.11.0.136
+    port: 6379
+
+ws:
+  port: 8888
+  writerIdleTimeSeconds: 120
+  readerIdleTimeSeconds: 60
+

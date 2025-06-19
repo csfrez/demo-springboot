@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket 客户端</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        #log {
+            margin-top: 20px;
+            white-space: pre-wrap;
+            border: 1px solid #ccc;
+            padding: 10px;
+            height: 300px;
+            overflow-y: scroll;
+        }
+    </style>
+</head>
+<body>
+
+<h1>WebSocket 客户端</h1>
+<p>连接状态：<span id="status">未连接</span></p>
+
+<label for="messageInput">发送消息：</label>
+<input type="text" id="messageInput" placeholder="输入要发送的消息..." style="width: 300px;">
+<button onclick="sendMessage()">发送</button>
+
+<div id="log">日志输出：</div>
+
+<script>
+    const token = "123456";
+    const wsUrl = "ws://localhost:8888/socket/123456?gray=0";
+
+    const statusSpan = document.getElementById("status");
+    const logDiv = document.getElementById("log");
+    let socket = null;
+    let heartbeatInterval = null;
+
+    function updateStatus(status) {
+        statusSpan.textContent = status;
+    }
+
+    function log(message) {
+        const time = new Date().toLocaleTimeString();
+        logDiv.textContent += `\n[${time}] ${message}`;
+        logDiv.scrollTop = logDiv.scrollHeight; // 自动滚动到底部
+    }
+
+    function connect() {
+        socket = new WebSocket(wsUrl);
+
+        socket.onopen = () => {
+            updateStatus("已连接");
+            log("连接已建立");
+
+            // 发送初始身份验证消息
+            socket.send(JSON.stringify({ token: token, content: "Hello Server" }));
+        };
+
+        socket.onmessage = (event) => {
+            if (event.data === 'PING') {
+                log("收到心跳: PING");
+                socket.send("PONG")
+                log("发送心跳: PONG");
+            } else if (event.data === 'PONG') {
+                log("收到心跳: PONG");
+            } else {
+                log(`收到消息: ${event.data}`);
+            }
+        };
+
+        socket.onclose = (event) => {
+            updateStatus("断开连接");
+            log(`连接已关闭，代码: ${event.code}，原因: ${event.reason}`);
+            clearInterval(heartbeatInterval);
+
+            // 可选：尝试重新连接（比如每隔几秒）
+            //setTimeout(connect, 5000);
+        };
+
+        socket.onerror = (error) => {
+            log(`发生错误: ${JSON.stringify(error)}`);
+            socket.close();
+        };
+
+        // 每隔 60 秒发送一次 PING
+        heartbeatInterval = setInterval(() => {
+            if (socket.readyState === WebSocket.OPEN) {
+                log("发送心跳: PING");
+                socket.send("PING");
+            }
+        }, 60000);
+    }
+
+    function sendMessage() {
+        const input = document.getElementById("messageInput");
+        const message = input.value.trim();
+        if (message && socket && socket.readyState === WebSocket.OPEN) {
+            socket.send(message);
+            log(`发送消息: ${message}`);
+            input.value = "";
+        } else {
+            alert("WebSocket 不在连接状态，请稍后再试。");
+        }
+    }
+
+    // 初始化连接
+    connect();
+</script>
+
+</body>
+</html>
