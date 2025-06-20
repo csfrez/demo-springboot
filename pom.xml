@@ -26,6 +26,7 @@
         <module>demo-springboot-websocket</module>
         <module>demo-springboot-ws</module>
         <module>demo-springboot-download</module>
+        <module>demo-springboot-token</module>
     </modules>
 
     <properties>
