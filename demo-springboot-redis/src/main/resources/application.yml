@@ -1,0 +1,8 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: demo-springboot-redis
+  redis:
+    host: 10.11.0.136
+    port: 6379
