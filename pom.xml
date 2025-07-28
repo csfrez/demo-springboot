@@ -27,6 +27,7 @@
         <module>demo-springboot-ws</module>
         <module>demo-springboot-download</module>
         <module>demo-springboot-token</module>
+        <module>demo-springboot-redis</module>
     </modules>
 
     <properties>
