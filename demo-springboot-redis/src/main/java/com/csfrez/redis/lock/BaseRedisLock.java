@@ -43,7 +43,7 @@ public class BaseRedisLock {
 
     private static final Duration DEFAULT_DURATION = Duration.ofSeconds(30);
 
-    private static final int DEFAULT_RETRIES = -1;
+    private static final int DEFAULT_RETRIES = 5;
 
     private String genLock(String identity) {
         return LOCK_PREFIX + name.toLowerCase(Locale.ROOT) + ":" + lockGenerator.apply(identity);
@@ -51,7 +51,7 @@ public class BaseRedisLock {
 
     private String lock(String identity, Duration lockTimeout, int retries) {
         String lock = genLock(identity);
-        boolean lockResult = RedisDistributedLock.tryLock(lock, lockTimeout.getSeconds());
+        boolean lockResult = RedisDistributedLock.tryLock(lock, lockTimeout.getSeconds(), retries);
         if (!lockResult) {
             throw new RuntimeException("获取分布式锁失败");
         }

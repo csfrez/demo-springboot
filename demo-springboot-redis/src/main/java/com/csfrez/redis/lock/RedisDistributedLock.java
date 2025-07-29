@@ -11,6 +11,7 @@ import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.scripting.support.ResourceScriptSource;
 
 import java.util.Collections;
+import java.util.Random;
 
 /**
  * redis 分布式锁
@@ -43,16 +44,34 @@ public class RedisDistributedLock {
      *
      * @param lockKey       锁的 key
      * @param expireSeconds 过期时间（秒）
+     * @param maxRetries    最大重试次数
      * @return 是否获取成功
      */
-    public static boolean tryLock(String lockKey, long expireSeconds) {
+    public static boolean tryLock(String lockKey, long expireSeconds, int maxRetries) {
         String lockValue = IdUtil.fastSimpleUUID();
-        Boolean success = redisTemplate.execute(lockScript,
-                Collections.singletonList(lockKey),
-                lockValue, String.valueOf(expireSeconds));
-        if (Boolean.TRUE.equals(success)) {
-            threadLocal.set(lockValue);
-            return true;
+        int sum = 0;
+        for (int i = 0; i < maxRetries; i++) {
+            try {
+                Boolean success = redisTemplate.execute(lockScript,
+                        Collections.singletonList(lockKey),
+                        lockValue, String.valueOf(expireSeconds));
+                if (Boolean.TRUE.equals(success)) {
+                    threadLocal.set(lockValue);
+                    return true;
+                }
+            } catch (Exception e) {
+                log.error("尝试获取锁异常", e);
+            }
+            try {
+                int times = i + 1;
+                log.warn("尝试获取锁失败，正在第 {} 次重试", times);
+                sum += times;
+                long waitTime = 1000 * (sum);
+                Thread.sleep(waitTime);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return false;
+            }
         }
         return false;
     }
