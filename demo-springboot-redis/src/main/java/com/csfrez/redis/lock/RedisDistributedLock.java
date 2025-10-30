@@ -7,11 +7,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
-import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.scripting.support.ResourceScriptSource;
 
 import java.util.Collections;
-import java.util.Random;
 
 /**
  * redis 分布式锁
@@ -73,7 +71,10 @@ public class RedisDistributedLock {
                 return false;
             }
         }
-        return false;
+        return true;
+//        Boolean success = redisTemplate.opsForValue().setIfAbsent(lockKey, lockValue, Duration.ofMillis(expireSeconds));
+//        log.info("尝试获取锁结果：{}", success);
+//        return success;
     }
 
     /**

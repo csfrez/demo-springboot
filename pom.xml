@@ -28,6 +28,7 @@
         <module>demo-springboot-download</module>
         <module>demo-springboot-token</module>
         <module>demo-springboot-redis</module>
+        <module>demo-springboot-thread</module>
     </modules>
 
     <properties>
