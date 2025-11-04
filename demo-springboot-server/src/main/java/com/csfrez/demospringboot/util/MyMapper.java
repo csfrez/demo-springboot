@@ -5,7 +5,7 @@ import tk.mybatis.mapper.common.MySqlMapper;
 
 /**
  * 继承自己的MyMapper
- * @author yangzhi
+ * @author csfrez
  * @since 2018-10-19 
  * @param <T>
  */
