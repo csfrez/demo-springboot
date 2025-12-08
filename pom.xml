@@ -29,6 +29,7 @@
         <module>demo-springboot-token</module>
         <module>demo-springboot-redis</module>
         <module>demo-springboot-thread</module>
+        <module>demo-springboot-ai</module>
     </modules>
 
     <properties>
