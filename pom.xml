@@ -16,6 +16,7 @@
         <module>demo-springboot-client</module>
         <module>demo-springboot-security</module>
         <module>demo-springboot-server</module>
+        <module>demo-springboot-redis</module>
     </modules>
 
 	<properties>
@@ -24,7 +25,7 @@
 		<java.version>1.8</java.version>
 
 		<!-- springboot -->
-		<spring-boot.version>1.5.20.RELEASE</spring-boot.version>
+		<spring-boot.version>1.5.22.RELEASE</spring-boot.version>
         <admin.springboot.version>1.5.7</admin.springboot.version>
         <duubo.springboot.version>0.1.2.RELEASE</duubo.springboot.version>
     	<mybatis.springboot.version>1.3.4</mybatis.springboot.version>
