@@ -30,6 +30,7 @@
         <module>demo-springboot-redis</module>
         <module>demo-springboot-thread</module>
         <module>demo-springboot-ai</module>
+        <module>demo-springboot-service</module>
     </modules>
 
     <properties>
